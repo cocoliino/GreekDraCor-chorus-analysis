@@ -95,4 +95,3 @@ get_chorus_metrics <- function(g){
       )
     )
 }
-

@@ -5,7 +5,3 @@
 .httr-oauth
 .DS_Store
 .quarto
-data/
-*.xml
-*.tei
-*.rds
