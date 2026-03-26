@@ -31,8 +31,8 @@ node_df <- node_df %>%
     ),
     # clean gender
     gender_cat = case_when(
-      node_sex == "FEMALE" ~ "Female",
-      node_sex == "MALE" ~ "Male",
+      sex == "FEMALE" ~ "Female",
+      sex == "MALE" ~ "Male",
       TRUE ~ "Unknown"
     )
   )

@@ -3,6 +3,13 @@ library(dplyr)
 library(forcats)
 library(tidyr)
 
+# color palette for chorus types (group vs individual vs mixed)
+scale_chorus_fill <- scale_fill_manual(values = c(
+  "group"      = "#1dd3b0",
+  "individual" = "#7570b3",
+  "mixed"      = "#3a6ea5"
+))
+
 # what is plotted here?
 # 9 figures comparing chorus centrality metrics and structural features across different authors and chorus types 
 

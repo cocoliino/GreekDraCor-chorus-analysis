@@ -33,8 +33,12 @@ scale_author_color <- scale_color_manual(values = c(
 # return indices of all nodes containing "χορ"
 # attention, can be more than one chorus node per play, e.g. different chorai, or chorus + chorleiter
 detect_chorus <- function(g){
-  
+
   chorus_idx <- grep("χορ", V(g)$name, ignore.case = TRUE)
+  if (length(chorus_idx) == 0) {
+    warning("No chorus node detected in play: ",
+            graph_attr(g, "name") %||% "(unnamed graph)")
+  }
   return(chorus_idx)
 }
 

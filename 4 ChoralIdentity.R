@@ -45,7 +45,10 @@ for (i in seq_len(nrow(greek))) {
     
     # Load graph
     g <- get_net_cooccur_igraph(play = play_id, corpus = "greek")
-    
+
+    # Ensure undirected (centrality measures require it)
+    if (is_directed(g)) g <- as.undirected(g, mode = "collapse")
+
     # Get chorus node metrics
     chorus_metrics <- get_chorus_metrics(g)
     

@@ -32,7 +32,10 @@ for (i in seq_len(nrow(greek))) {
     
     # Load graph
     g <- get_net_cooccur_igraph(play = play_id, corpus = "greek")
-    
+
+    # Ensure undirected (cluster_fast_greedy and some centrality measures require it)
+    if (is_directed(g)) g <- as.undirected(g, mode = "collapse")
+
     # Detect chorus nodes
     ch_nodes <- detect_chorus(g)
     ch_found <- length(ch_nodes) > 0
@@ -150,7 +153,8 @@ for (i in seq_len(nrow(greek))) {
     
   }, error = function(e) {
     cat("ERROR:", e$message, "\n")
-    results_list[[i]] <- NULL
+    # slot stays NULL (pre-allocated); use <<- to modify outer list
+    results_list[[i]] <<- NULL
   })
 }
 
