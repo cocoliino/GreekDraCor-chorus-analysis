@@ -73,10 +73,13 @@ for (i in seq_len(nrow(greek))) {
       ch_eig_rank <- rank(-eig_all)[ch_nodes] %>% mean(na.rm = TRUE)
       ch_betw_rank <- rank(-betw_all)[ch_nodes] %>% mean(na.rm = TRUE)
       
-      # Chorus type classification
-      chorus_type <- if (all(chorus_metrics$is_group)) {
+      # Chorus type classification (handle NAs so they don't silently become "mixed")
+      ig <- chorus_metrics$is_group
+      chorus_type <- if (all(is.na(ig))) {
+        "unknown"
+      } else if (all(ig[!is.na(ig)])) {
         "group"
-      } else if (all(!chorus_metrics$is_group)) {
+      } else if (all(!ig[!is.na(ig)])) {
         "individual"
       } else {
         "mixed"
@@ -98,8 +101,19 @@ for (i in seq_len(nrow(greek))) {
       c_det <- cluster_fast_greedy(g)
       num_comm <- length(c_det)
       mod_val <- modularity(c_det)
+      # Community membership: check whether all chorus nodes share the same community
       ch_comm <- if (ch_found) {
-        mean(membership(c_det)[ch_names], na.rm = TRUE)
+        ch_memberships <- membership(c_det)[ch_names]
+        if (length(unique(ch_memberships)) == 1) {
+          as.integer(ch_memberships[1])  # single community ID
+        } else {
+          NA  # chorus nodes split across communities
+        }
+      } else NA
+
+      # Flag whether chorus nodes are in the same community
+      ch_same_community <- if (ch_found && length(ch_names) > 1) {
+        length(unique(membership(c_det)[ch_names])) == 1
       } else NA
     } else {
       num_comm <- NA
@@ -143,6 +157,7 @@ for (i in seq_len(nrow(greek))) {
       
       # Community
       chorus_community = ch_comm,
+      chorus_same_community = ch_same_community,
       num_communities = num_comm,
       modularity = round(mod_val, 4),
       

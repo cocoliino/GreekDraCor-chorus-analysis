@@ -5,7 +5,6 @@
 # - do choruses in comedies have higher degree centrality than those in tragedies?
 # - do choruses in satyr plays have higher betweenness centrality than those in tragedies?
 # - do choruses in comedies have higher eigenvector centrality than those in satyr plays?
-
 library(rdracor)
 library(igraph)
 library(dplyr)

@@ -4,8 +4,6 @@
 # overview of the GreekDraCor corpus in terms of metadata (playwrights, genres, years)
 # plot choral presence across the corpus, to inform subsequent analyses of choral identity and co-occurrence networks
 
-source("0 SetUp.R") # theme_pub, color scales, helper functions
-
 library(rdracor) # for accessing Dracor corpora
 library(dplyr) # for data manipulation
 library(ggplot2) # for plotting
@@ -94,4 +92,4 @@ ggsave("plot1_CorpusOverview.png", plot1, width = 7, height = 4, dpi = 300)
 # Namely: Alcestis. Andromache. Cyclops. Heracleidae. Hippolytus. Medea.
 # plays are supposed to be added to GreekDraCore as copyright situation is clarified
 # Euripides described by Aristotle as "the most tragic of poets", probably reference to preference for unhappy endings
-# Cyclops would have been interesting to analyze since  
+# Cyclops would have been interesting to analyze

@@ -28,7 +28,6 @@ scale_author_color <- scale_color_manual(values = c(
 ))
 
 
-
 # 1: help functions -----------------------------------------------------------
 # return indices of all nodes containing "χορ"
 # attention, can be more than one chorus node per play, e.g. different chorai, or chorus + chorleiter

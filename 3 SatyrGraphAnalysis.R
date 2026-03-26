@@ -1,6 +1,7 @@
-# overview of the graph structure of the satyr play "Ichneutae" by Sophocles
 library(rdracor)
 library(igraph)
+
+# overview of the graph structure of the satyr play "Ichneutae" by Sophocles
 
 # list all play names
 greek$playName
@@ -19,7 +20,7 @@ G <- get_net_cooccur_igraph(exampleForGraph, corpus="greek")
 # Make undirected
 if (is_directed(G)) G <- as.undirected(G, mode = "collapse")
 
-# weidhted edges
+# weighted edges
 edge_attr_names(G)
 
 summary(G)
@@ -109,8 +110,9 @@ V(G)$color <- ifelse(
 )
 
 # --- Plot ---
-# igrah looks different everytime, why?
-# want to use a layout that highlights the chorus nodes, maybe a layout that places chorus nodes in the center and others around them?
+# igraph uses a stochastic layout algorithm by default (Fruchterman-Reingold),
+# so the plot changes each time. Setting a seed makes it reproducible.
+set.seed(42)
 
 # plot with chorus nodes highlighted and edge only between chorus nodes highlighted
 plot.igraph(

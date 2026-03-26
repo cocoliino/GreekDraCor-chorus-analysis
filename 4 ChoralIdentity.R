@@ -4,7 +4,7 @@
 #
 # approach:
 # - one row per CHORUS NODE (not per play), so multi-chorus plays like Ichneutae get 3 rows
-# - map chorus_identiy(g) output to the chorus nodes detected in the graph
+# - map chorus_identity(g) output to the chorus nodes detected in the graph
 # - add this as node attributes: is_group, sex, chorus_plurality (singular/plural)
 # - then test: do group choruses have different network metrics than individual choruses?
 
@@ -17,13 +17,10 @@ library(stringr)
 
 # 1: extract per-chorus-node metrics from every play --------------------------------------------------------------
 
-
 node_results <- list()
-row_counter <- 0
 
 # loop over all plays
-# loop get_chorus_metrics()
-# debug: surpress warning messages for plays without chorus nodes, since they are expected and handled by tryCatch
+# suppress expected warnings for plays without chorus nodes (e.g. Menander's Pan)
 for (i in seq_len(nrow(greek))) {
   
   play_id <- greek$playName[i]
@@ -72,17 +69,9 @@ for (i in seq_len(nrow(greek))) {
   })
 }
 
-# Warning messages:
-# 1: In detect_chorus(g) : No chorus node detected in play: Πάν (Pan)
-# 2: In detect_chorus(g) : No chorus node detected in play: Πάν (Pan)
-
-# Note: these warnings are expected for plays without chorus nodes, and are handled gracefully by the tryCatch block, so they do not indicate a problem with the script.
-
 # combine results into one data frame
 node_df <- bind_rows(node_results)
 node_df
 
 cat("Total chorus nodes:", nrow(node_df), "\n")
 cat("Across", length(unique(node_df$play_id)), "plays\n\n")
-
-

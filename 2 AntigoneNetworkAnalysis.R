@@ -5,7 +5,7 @@ library(rdracor)
 # chosen as example is "sophocles-antigone" because I started close reading the reclam edition
 # it also does not have a fully connected graph like the satyr play "ichneutae" and 
 # thus allows for more interesting metric network analysis
-# it also has only one chorus node, making certain metrics easyier to interpret for the chorus
+# it also has only one chorus node, making certain metrics easier to interpret for the chorus
 
 exampleForSNA <- "sophocles-antigone"
 
