@@ -1,5 +1,3 @@
-# 6 Chorus Genre Analysis
-#
 # goal:
 # analyze how GENRE (Tragedy / Comedy / Satyr) shapes the chorus's network position
 # - do choruses in comedies have higher degree centrality than those in tragedies?
@@ -35,3 +33,6 @@ node_df <- node_df %>%
       TRUE ~ "Unknown"
     )
   )
+
+# Remove rows without genre for genre-specific analysis
+node_genre <- node_df %>% filter(!is.na(genre))
