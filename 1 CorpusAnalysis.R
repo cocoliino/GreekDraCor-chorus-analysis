@@ -85,11 +85,11 @@ plot1 <- ggplot(yearPlot_df, aes(x = year, y = author, color = author, shape = g
 plot1
 
 ggsave("plot1_CorpusOverview.png", plot1, width = 7, height = 4, dpi = 300)
-# no satyr Genre since the only Satyr play has been filtered out due to missing year information
-# note the the clustering of authors and genres in the same time periods
-# Menander occupies special placement with only one comedy play and significantly later than the other playwrights
-# ! the corpus is missing several plays from Euripides since they are from another edition not yet under public domain
-# Namely: Alcestis. Andromache. Cyclops. Heracleidae. Hippolytus. Medea.
-# plays are supposed to be added to GreekDraCore as copyright situation is clarified
-# Euripides described by Aristotle as "the most tragic of poets", probably reference to preference for unhappy endings
-# Cyclops would have been interesting to analyze
+
+# Notes:
+# No satyr genre shown since the only satyr play was filtered due to missing year.
+# Clustering of authors and genres in similar time periods is visible.
+# Menander occupies a special late placement with only one comedy play.
+# The corpus is missing several Euripides plays due to copyright:
+# Alcestis, Andromache, Cyclops, Heracleidae, Hippolytus, Medea
+# Cyclops would have been interesting to analyze as a satyr play.
