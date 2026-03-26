@@ -112,7 +112,7 @@ V(G)$color <- ifelse(
 # --- Plot ---
 # igraph uses a stochastic layout algorithm by default (Fruchterman-Reingold),
 # so the plot changes each time. Setting a seed makes it reproducible.
-set.seed(42)
+set.seed(5)
 
 # plot with chorus nodes highlighted and edge only between chorus nodes highlighted
 plot.igraph(
