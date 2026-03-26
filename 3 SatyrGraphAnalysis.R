@@ -84,7 +84,7 @@ castStatistics
 # 3: Chorus Overview --------------------------------------------------------------
 
 # chorus nodes identities 
-chorus_identiy(G)
+chorus_identity(G)
 
 # plot graph with chorus nodes highlighted and edge only between chorus nodes highlighted
 # detect chorus nodes

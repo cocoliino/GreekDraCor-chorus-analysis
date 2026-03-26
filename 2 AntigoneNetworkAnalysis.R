@@ -19,7 +19,7 @@ detect_chorus(GSNA)
 chorus_name <- V(GSNA)$name[detect_chorus(GSNA)]
 chorus_name
 
-chorus_identiy(GSNA)
+chorus_identity(GSNA)
 # unknown sex and group status, but singular chorus node, so we can classify as "individual chorus"
 
 # 1: Global Network Metrics -----------------------------------------------
