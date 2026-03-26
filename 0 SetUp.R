@@ -77,19 +77,17 @@ chorus_identity <- function(g){
 # use chorus_identity for get_chorus_metrics() that returns a data frame with one row per chorus node, and all the relevant metrics and attributes for that node, including its identity (group vs individual), its centrality measures, its proximity to the protagonist, etc.
 # get_chorus_metrics() should at least return the chorus node indices, their names, their is_group and sex attributes, and their centrality measures (degree, betweenness, closeness, eigenvector). Then in the loop we can compute the proximity to protagonist and community membership, which require additional graph-level calculations (e.g. identifying the protagonist node, running community detection) that we only want to do once per play rather than once per chorus node.
 get_chorus_metrics <- function(g){
-  
+
   chorus_idx <- detect_chorus(g)
-  # use chorus_identity to get chorus node attributes
-  # chorus_identity(g) returns a tibble with one row per chorus node, and columns for name, sex, and is_group attributes of the chorus nodes. We can use this to extract the relevant attributes for the chorus nodes in our get_chorus_metrics() function.
+
+  # Build from chorus_identity and add centrality in one pipeline.
+  # Using mutate instead of bind_cols avoids fragile row-order assumptions.
   chorus_identity(g) %>%
-    filter(Name %in% V(g)$name[chorus_idx]) %>%
-   select(name = Name, sex = sex, is_group = is_group) %>%
-    bind_cols(
-      data.frame(
-        degree = degree(g)[chorus_idx],
-        betweenness = betweenness(g)[chorus_idx],
-        closeness = closeness(g)[chorus_idx],
-        eigenvector = eigen_centrality(g)$vector[chorus_idx]
-      )
+    rename(name = Name) %>%
+    mutate(
+      degree      = degree(g)[chorus_idx],
+      betweenness = betweenness(g)[chorus_idx],
+      closeness   = closeness(g)[chorus_idx],
+      eigenvector = eigen_centrality(g)$vector[chorus_idx]
     )
 }
