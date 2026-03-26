@@ -17,18 +17,13 @@ library(stringr)
 
 # 1: extract per-chorus-node metrics from every play --------------------------------------------------------------
 
-# Key difference from script 4:
-#   Script 4 produces ONE ROW per PLAY (aggregated chorus metrics)
-#   This script produces ONE ROW per CHORUS NODE
-#   So Ichneutae (3 chorus nodes) → 3 rows
-#   Antigone (1 chorus node) → 1 row
-#   Menander's Dyskolos (0 chorus nodes) → 0 rows
 
 node_results <- list()
 row_counter <- 0
 
 # loop over all plays
 # loop get_chorus_metrics()
+# debug: surpress warning messages for plays without chorus nodes, since they are expected and handled by tryCatch
 for (i in seq_len(nrow(greek))) {
   
   play_id <- greek$playName[i]
