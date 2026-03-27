@@ -15,27 +15,42 @@ library(tidyr)
 library(ggplot2)
 library(stringr)
 
+# filter out plays without chorus nodes for chorus-specific analysis
+
+chorus_plays <- greek %>%
+  rowwise() %>%
+  mutate(has_chorus = tryCatch({
+    g <- get_net_cooccur_igraph(play = playName, corpus = "greek")
+    if (is_directed(g)) g <- as.undirected(g, mode = "collapse")
+    length(detect_chorus(g)) > 0
+  }, error = function(e) {
+    FALSE
+  })) %>%
+  ungroup() %>%
+  filter(has_chorus) %>%
+  select(-has_chorus)
+
 # 1: extract per-chorus-node metrics from every play --------------------------------------------------------------
 
 node_results <- list()
 
 # loop over all plays
 # suppress expected warnings for plays without chorus nodes (e.g. Menander's Pan)
-for (i in seq_len(nrow(greek))) {
+for (i in seq_len(nrow(chorus_plays))) {
   
-  play_id <- greek$playName[i]
-  play_title <- greek$title[i]
+  play_id <- chorus_plays$playName[i]
+  play_title <- chorus_plays$title[i]
   
   # author extraction
-  author_name <- if ("firstAuthorName" %in% names(greek)) {
-    greek$firstAuthorName[i]
-  } else if ("author" %in% names(greek)) {
-    greek$author[i]
+  author_name <- if ("firstAuthorName" %in% names(chorus_plays)) {
+    chorus_plays$firstAuthorName[i]
+  } else if ("author" %in% names(chorus_plays)) {
+    chorus_plays$author[i]
   } else {
     "Unknown"
   }
   
-  cat("Processing", i, "/", nrow(greek), ":", play_title,
+  cat("Processing", i, "/", nrow(chorus_plays), ":", play_title,
       "(", play_id, ") by", author_name, "... ")
   
   tryCatch({
@@ -55,7 +70,7 @@ for (i in seq_len(nrow(greek))) {
           play_id = play_id,
           title = play_title,
           author = author_name,
-          genre = greek$normalizedGenre[i]
+          genre = chorus_plays$normalizedGenre[i]
         ) %>%
         select(play_id, title, author, everything())
       
@@ -69,9 +84,11 @@ for (i in seq_len(nrow(greek))) {
   })
 }
 
-# combine results into one data frame
-node_df <- bind_rows(node_results)
-node_df
+# check how many chorus nodes we have in total across all plays
+sum(sapply(node_results, nrow))
 
-cat("Total chorus nodes:", nrow(node_df), "\n")
-cat("Across", length(unique(node_df$play_id)), "plays\n\n")
+# combine results into one data frame
+choralIdentity_df <- bind_rows(node_results)
+choralIdentity_df
+
+cat("Total chorus nodes:", nrow(choralIdentity_df), "across", length(unique(choralIdentity_df$play_id)), "plays\n\n")
