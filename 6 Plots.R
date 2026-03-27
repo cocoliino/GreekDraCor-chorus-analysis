@@ -165,7 +165,7 @@ fig1 + fig2 + fig3 + fig4 + fig5 + fig6 + fig7 + fig8 + plot_layout(ncol = 4) +
   theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
 ggsave("fig_chorus_centrality_comparison.png", width = 16, height = 8, dpi = 300)
 
-# 9: degree vs. betweenness ----
+# 9: degree vs. betweenness node level by Genre----
 
 chorus_node_df <- choralIdentity_df %>%
   mutate(
@@ -305,13 +305,15 @@ p_time_genre <- ggplot(
   ) +
   theme_pub
 p_time_genre
+ggsave("fig_chorus_degree_time_genre.png", p_time_genre, width = 6, height = 4, dpi = 300)
 
 # plot together for easier comparison
+# @ could be nice to remove the legends from the node and play structural role plots to save space
 final_plot <- (p_struct_node + p_struct_play) /
   (p_role_node + p_role_play) /
   p_time_genre +
   plot_annotation(title = "Chorus Structural Roles and Time Trends") +
-  theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
+  theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))  
 
 final_plot
 ggsave("fig_chorus_structural_roles_time.png", final_plot, width = 12, height = 12, dpi = 300)
