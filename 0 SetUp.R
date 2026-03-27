@@ -27,6 +27,13 @@ scale_author_color <- scale_color_manual(values = c(
   "Menander" = "#3c1642"
 ))
 
+# define a custom color palette for chorus types (group vs individual vs mixed)
+scale_chorus_fill <- scale_fill_manual(values = c(
+  "group"      = "purple",
+  "individual" = "yellow",
+  "mixed"      = "orange"
+))
+
 # 1: help functions -----------------------------------------------------------
 # return indices of all nodes containing "χορ"
 # attention, can be more than one chorus node per play, e.g. different chorai, or chorus + chorleiter
