@@ -171,7 +171,6 @@ cat("Modularity:", round(modularity(c1), 4), "\n")
 cat("Number of communities:", length(c1), "\n")
 
 # Size of each community
-cat("Community sizes:\n")
 print(sizes(c1))
 
 # Which community is the chorus in?
