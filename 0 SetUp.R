@@ -10,28 +10,20 @@ theme_pub <- theme_minimal() +
     axis.text.x = element_text(angle = 45, hjust = 1)
   )
 
-#  define a custom color palette for the authors and use it consistently in all plots
-scale_author_fill <- scale_fill_manual(values = c(
-  "Aeschylus" = "#affc41",
-  "Sophocles" = "#1dd3b0",
-  "Euripides" = "#7570b3",
-  "Aristophanes" = "#3a6ea5",
-  "Menander" = "#3c1642"
-))
-
 scale_author_color <- scale_color_manual(values = c(
-  "Aeschylus" = "#affc41",
-  "Sophocles" = "#1dd3b0",
-  "Euripides" = "#7570b3",
-  "Aristophanes" = "#3a6ea5",
-  "Menander" = "#3c1642"
+  "Aeschylus"   = "#8ac926",  # bright green (kept similar)
+  "Sophocles"   = "#00bfc4",  # cyan/teal (clear + modern)
+  "Euripides"   = "#c77dff",  # purple (lighter, more distinct)
+  "Aristophanes"= "#ff7f11",  # strong orange
+  "Menander"    = "#2b2d42"   # dark slate (neutral)
 ))
 
-# define a custom color palette for chorus types (group vs individual vs mixed)
-scale_chorus_fill <- scale_fill_manual(values = c(
-  "group"      = "purple",
-  "individual" = "yellow",
-  "mixed"      = "orange"
+scale_author_fill <- scale_fill_manual(values = c(
+  "Aeschylus"   = "#8ac926",
+  "Sophocles"   = "#00bfc4",
+  "Euripides"   = "#c77dff",
+  "Aristophanes"= "#ff7f11",
+  "Menander"    = "#2b2d42"
 ))
 
 # 1: help functions -----------------------------------------------------------
@@ -76,7 +68,6 @@ chorus_identity <- function(g){
     
   )
 }
-
 
 # use chorus_identity for get_chorus_metrics() that returns a data frame with one row per chorus node, and all the relevant metrics and attributes for that node, including its identity (group vs individual), its centrality measures, its proximity to the protagonist, etc.
 # get_chorus_metrics() should at least return the chorus node indices, their names, their is_group and sex attributes, and their centrality measures (degree, betweenness, closeness, eigenvector). Then in the loop we can compute the proximity to protagonist and community membership, which require additional graph-level calculations (e.g. identifying the protagonist node, running community detection) that we only want to do once per play rather than once per chorus node.
