@@ -64,10 +64,7 @@ cast <- tibble(
   name = V(G)$name,
   sex = V(G)$sex,
   is_group = V(G)$isGroup
-) %>%
-  mutate(
-        is_chorus = name %in% chorus_nodes
-  )
+)
 cast
 
 # simple cast statistics, count is_group and gender 
