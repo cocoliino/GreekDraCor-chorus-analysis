@@ -8,6 +8,7 @@ library(tidyr)
 # important! we are plotting the centrality metrics for the chorus nodes, not for the plays
 # this means that if a play has multiple chorus nodes (e.g. Ichneutae has 3 choruses), 
 # we will have 3 rows for that play, and each chorus node's centrality metrics will be plotted separately
+# maybe interesting to also plot the average centrality metrics for the chorus nodes in each play, to see if there are differences at the play level as well as at the node level
 
 # - degree centrality: how many connections the chorus has to other nodes in the network, indicating its level of interaction
 # - betweenness centrality: how much the chorus serves as a bridge or connector in the network
