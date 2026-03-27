@@ -1,3 +1,9 @@
+library(rdracor)
+library(igraph)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
 # goal:
 # analyze how choral identity (group vs individual, singular vs plural)
 # relates to network position (degree, betweenness, eigenvector, closeness)
@@ -7,12 +13,7 @@
 # - map chorus_identity(g) output to the chorus nodes detected in the graph
 # - add this as node attributes: is_group, sex, chorus_plurality (singular/plural)
 
-library(rdracor)
-library(igraph)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(stringr)
+# add: community membership of chorus nodes for plotting later
 
 # filter out plays without chorus nodes for chorus-specific analysis
 
@@ -95,6 +96,10 @@ choralIdentity_df
 chorus_node_counts <- choralIdentity_df %>%
   group_by(play_id) %>%
   summarise(num_chorus_nodes = n())
+
+# add chorus_node_counts per play to the choralIdentity_df
+choralIdentity_df <- choralIdentity_df %>%
+  left_join(chorus_node_counts, by = "play_id")
 
 # print summary
 cat("Total chorus nodes:", nrow(choralIdentity_df), "across", length(unique(choralIdentity_df$play_id)), "plays\n\n")
