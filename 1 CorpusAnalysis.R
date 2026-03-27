@@ -57,8 +57,7 @@ yearPlot_df <- greek %>%
          !is.na(normalizedGenre)) %>%
   mutate(
     year = as.numeric(yearNormalized),
-    author = factor(firstAuthorName,
-                    levels = c("Aeschylus", "Sophocles", "Euripides", "Aristophanes", "Menander")),
+    author = factor(firstAuthorName),
     genre = factor(normalizedGenre)
   )
 
@@ -72,16 +71,18 @@ filtered_out
 # 2. sophocles-trachiniae, Tragedy -> left out of year-based trend analysis, but will be included in genre-based analysis and choral co-occurrence network analysis
 
 # plot Playwrights and Genres over Year
+# use scale_author_color for consistent colors across all plots
+# genre is shape
 plot1 <- ggplot(yearPlot_df, aes(x = year, y = author, color = author, shape = genre)) +
-  geom_jitter(height = 0.15, size = 3, alpha = 0.9) +
-  theme_pub +
-  labs(
-    title = "Greek Drama Corpus Overview (DraCor)",
-    x = "Year BC",
-    y = "Playwright",
-    color = "Playwright",
-    shape = "Genre"
-  )
+  geom_point(size = 3) +
+  scale_author_color +
+  labs(title = "Overview of GreekDraCor Corpus",
+       x = "Year of Premiere (normalized)",
+       y = "Playwright",
+       color = "Playwright",
+       shape = "Genre") +
+  theme_pub
+
 plot1
 
 ggsave("plot1_CorpusOverview.png", plot1, width = 7, height = 4, dpi = 300)
