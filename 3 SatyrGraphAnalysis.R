@@ -60,11 +60,14 @@ vertex_attr_names(G)
 # 2: Cast Overview --------------------------------------------------------------
 
 # cast: char names, sex and is group
-cast <- data.frame(
+cast <- tibble(
   name = V(G)$name,
   sex = V(G)$sex,
   is_group = V(G)$isGroup
-)
+) %>%
+  mutate(
+        is_chorus = name %in% chorus_nodes
+  )
 cast
 
 # simple cast statistics, count is_group and gender 
@@ -132,13 +135,3 @@ plot.igraph(
 # 
 # Usage
 # match_vertices(A, B, m, start, iteration)
-
-# 4: Cast with Choral Identity --------------------------------------------------------------
-
-# map chorus identity back to cast
-
-cast_chorus <- cast %>%
-  mutate(
-    is_chorus = name %in% chorus_nodes
-  )
-cast_chorus
