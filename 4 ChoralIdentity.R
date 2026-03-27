@@ -6,7 +6,6 @@
 # - one row per CHORUS NODE (not per play), so multi-chorus plays like Ichneutae get 3 rows
 # - map chorus_identity(g) output to the chorus nodes detected in the graph
 # - add this as node attributes: is_group, sex, chorus_plurality (singular/plural)
-# - then test: do group choruses have different network metrics than individual choruses?
 
 library(rdracor)
 library(igraph)
@@ -91,4 +90,13 @@ sum(sapply(node_results, nrow))
 choralIdentity_df <- bind_rows(node_results)
 choralIdentity_df
 
+# summarise how many plays with multi chorus nodes
+# how many chorus nodes in total across all plays
+chorus_node_counts <- choralIdentity_df %>%
+  group_by(play_id) %>%
+  summarise(num_chorus_nodes = n())
+
+# print summary
 cat("Total chorus nodes:", nrow(choralIdentity_df), "across", length(unique(choralIdentity_df$play_id)), "plays\n\n")
+cat("Plays with multiple chorus nodes:\n")
+print(chorus_node_counts %>% filter(num_chorus_nodes > 1))
